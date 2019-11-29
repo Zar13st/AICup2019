@@ -65,6 +65,7 @@ namespace AiCup2019
             {
                 targetPos = nearestEnemy.Value.Position;
             }
+
             debug.Draw(new CustomData.Log("Target pos: " + targetPos));
             Vec2Double aim = new Vec2Double(0, 0);
             if (nearestEnemy.HasValue)
@@ -80,14 +81,18 @@ namespace AiCup2019
             {
                 jump = true;
             }
-            UnitAction action = new UnitAction();
-            action.Velocity = targetPos.X - unit.Position.X;
-            action.Jump = jump;
-            action.JumpDown = !jump;
-            action.Aim = aim;
-            action.Shoot = unit.Weapon.HasValue && unit.Weapon?.Typ != WeaponType.RocketLauncher;
-            action.SwapWeapon = !unit.Weapon.HasValue || unit.Weapon?.Typ == WeaponType.RocketLauncher;
-            action.PlantMine = false;
+
+            var action = new UnitAction
+            {
+                Velocity = (targetPos.X - unit.Position.X) * 1000,
+                Jump = jump,
+                JumpDown = !jump,
+                Aim = aim,
+                Shoot = unit.Weapon.HasValue && unit.Weapon?.Typ != WeaponType.RocketLauncher,
+                SwapWeapon = !unit.Weapon.HasValue || unit.Weapon?.Typ == WeaponType.RocketLauncher,
+                PlantMine = false
+            };
+
             return action;
         }
     }
