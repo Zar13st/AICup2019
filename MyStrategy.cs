@@ -21,21 +21,45 @@ namespace AiCup2019
                     }
                 }
             }
+
+            LootBox? nearestHealthPack = null;
             LootBox? nearestWeapon = null;
             foreach (var lootBox in game.LootBoxes)
             {
-                if (lootBox.Item is Item.Weapon)
+                if (lootBox.Item is Item.Weapon weapon)
                 {
+                    if (weapon.WeaponType == WeaponType.RocketLauncher)
+                    {
+                        continue;
+                    }
+
                     if (!nearestWeapon.HasValue || DistanceSqr(unit.Position, lootBox.Position) < DistanceSqr(unit.Position, nearestWeapon.Value.Position))
                     {
                         nearestWeapon = lootBox;
                     }
                 }
+
+                if (lootBox.Item is Item.HealthPack)
+                {
+                    if (!nearestHealthPack.HasValue || DistanceSqr(unit.Position, lootBox.Position) < DistanceSqr(unit.Position, nearestHealthPack.Value.Position))
+                    {
+                        nearestHealthPack = lootBox;
+                    }
+                }
             }
+
             Vec2Double targetPos = unit.Position;
-            if (!unit.Weapon.HasValue && nearestWeapon.HasValue)
+            if ((!unit.Weapon.HasValue || unit.Weapon?.Typ == WeaponType.RocketLauncher) && nearestWeapon.HasValue)
             {
                 targetPos = nearestWeapon.Value.Position;
+            }
+            else if (nearestEnemy.HasValue && unit.Health >= 100)
+            {
+                targetPos = nearestEnemy.Value.Position;
+            }
+            else if (nearestHealthPack.HasValue)
+            {
+                targetPos = nearestHealthPack.Value.Position;
             }
             else if (nearestEnemy.HasValue)
             {
@@ -61,8 +85,8 @@ namespace AiCup2019
             action.Jump = jump;
             action.JumpDown = !jump;
             action.Aim = aim;
-            action.Shoot = true;
-            action.SwapWeapon = false;
+            action.Shoot = unit.Weapon.HasValue && unit.Weapon?.Typ != WeaponType.RocketLauncher;
+            action.SwapWeapon = !unit.Weapon.HasValue || unit.Weapon?.Typ == WeaponType.RocketLauncher;
             action.PlantMine = false;
             return action;
         }
