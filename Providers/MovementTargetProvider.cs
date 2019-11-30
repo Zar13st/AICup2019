@@ -45,22 +45,24 @@ namespace AiCup2019.Providers
                 }
             }
 
+            var inMid = !(unit.Position.X > 19.5 && unit.Position.X < 20.5);
+
             var targetPos = unit.Position;
             if ((!unit.Weapon.HasValue || unit.Weapon?.Typ == WeaponType.RocketLauncher) && nearestWeapon.HasValue)
             {
                 targetPos = nearestWeapon.Value.Position;
             }
-            else if (nearestEnemy.HasValue && unit.Health > 80)
+            else if (nearestEnemy.HasValue && unit.Health > 80 && inMid)
             {
-                //targetPos = nearestEnemy.Value.Position;
+                targetPos = nearestEnemy.Value.Position;
             }
             else if (nearestHealthPack.HasValue)
             {
-                //targetPos = nearestHealthPack.Value.Position;
+                targetPos = nearestHealthPack.Value.Position;
             }
-            else if (nearestEnemy.HasValue && game.Players.FirstOrDefault(x => x.Id == unit.PlayerId).Score <= game.Players.FirstOrDefault(x => x.Id != unit.PlayerId).Score)
+            else if (nearestEnemy.HasValue && game.Players.FirstOrDefault(x => x.Id == unit.PlayerId).Score <= game.Players.FirstOrDefault(x => x.Id != unit.PlayerId).Score && inMid)
             {
-                //targetPos = nearestEnemy.Value.Position;
+                targetPos = nearestEnemy.Value.Position;
             }
 
             return (targetPos, nearestEnemy);

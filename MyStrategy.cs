@@ -25,10 +25,9 @@ namespace AiCup2019
 
             var shoot = _shootProvider.GetShoot(unit, enemy, game, debug);
 
-
             debug.Draw(new CustomData.Line(new Vec2Float((float)unit.Position.X, (float)unit.Position.Y + 1), new Vec2Float((float)enemy.Position.X, (float)enemy.Position.Y + 1), 0.1F, shoot ? new ColorFloat(0, 255, 0, 0.6F) : new ColorFloat(255, 0, 0, 0.6F)));
 
-            shoot = false;
+            //shoot = false;
 
             var action = new UnitAction
             {
