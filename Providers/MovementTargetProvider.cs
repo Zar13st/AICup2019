@@ -50,7 +50,7 @@ namespace AiCup2019.Providers
             {
                 targetPos = nearestWeapon.Value.Position;
             }
-            else if (nearestEnemy.HasValue && unit.Health >= 100)
+            else if (nearestEnemy.HasValue && unit.Health > 80)
             {
                 targetPos = nearestEnemy.Value.Position;
             }
