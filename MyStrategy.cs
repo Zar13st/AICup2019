@@ -13,14 +13,17 @@ namespace AiCup2019
         public UnitAction GetAction(Unit unit, Game game, Debug debug)
         {
             var (targetPos, nearestEnemy) = _movementTargetProvider.GetTarget(unit, game);
+            if (nearestEnemy == null) return new UnitAction();
+            var enemy = (Unit)nearestEnemy;
 
             debug.Draw(new CustomData.Log($"X: {unit.Position.X:F1}, Y: {unit.Position.Y:F1}"));
 
-            var aim = _aimProvider.GetAim(unit, nearestEnemy);
 
-            var jump = _jumpProvider.GetJump(game, unit, targetPos);
+            var aim = _aimProvider.GetAim(unit, enemy);
 
-            var shoot = _shootProvider.GetShoot(unit);
+            var jump = _jumpProvider.GetJump(unit, game, targetPos);
+
+            var shoot = _shootProvider.GetShoot(unit, enemy, game);
 
             var action = new UnitAction
             {

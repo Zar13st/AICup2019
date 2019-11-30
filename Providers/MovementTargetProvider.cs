@@ -1,4 +1,5 @@
-﻿using AiCup2019.Model;
+﻿using System.Linq;
+using AiCup2019.Model;
 
 namespace AiCup2019.Providers
 {
@@ -57,7 +58,7 @@ namespace AiCup2019.Providers
             {
                 targetPos = nearestHealthPack.Value.Position;
             }
-            else if (nearestEnemy.HasValue)
+            else if (nearestEnemy.HasValue && game.Players.FirstOrDefault(x => x.Id == unit.PlayerId).Score <= game.Players.FirstOrDefault(x => x.Id != unit.PlayerId).Score)
             {
                 targetPos = nearestEnemy.Value.Position;
             }
