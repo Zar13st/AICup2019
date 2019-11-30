@@ -17,13 +17,18 @@ namespace AiCup2019
             var enemy = (Unit)nearestEnemy;
 
             debug.Draw(new CustomData.Log($"X: {unit.Position.X:F1}, Y: {unit.Position.Y:F1}"));
-
+            debug.Draw(new CustomData.Log($"X: {enemy.Position.X:F1}, Y: {enemy.Position.Y:F1}"));
 
             var aim = _aimProvider.GetAim(unit, enemy);
 
             var jump = _jumpProvider.GetJump(unit, game, targetPos);
 
-            var shoot = _shootProvider.GetShoot(unit, enemy, game);
+            var shoot = _shootProvider.GetShoot(unit, enemy, game, debug);
+
+
+            debug.Draw(new CustomData.Line(new Vec2Float((float)unit.Position.X, (float)unit.Position.Y + 1), new Vec2Float((float)enemy.Position.X, (float)enemy.Position.Y + 1), 0.1F, shoot ? new ColorFloat(0, 255, 0, 0.6F) : new ColorFloat(255, 0, 0, 0.6F)));
+
+            shoot = false;
 
             var action = new UnitAction
             {

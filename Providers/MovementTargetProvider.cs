@@ -52,15 +52,15 @@ namespace AiCup2019.Providers
             }
             else if (nearestEnemy.HasValue && unit.Health > 80)
             {
-                targetPos = nearestEnemy.Value.Position;
+                //targetPos = nearestEnemy.Value.Position;
             }
             else if (nearestHealthPack.HasValue)
             {
-                targetPos = nearestHealthPack.Value.Position;
+                //targetPos = nearestHealthPack.Value.Position;
             }
             else if (nearestEnemy.HasValue && game.Players.FirstOrDefault(x => x.Id == unit.PlayerId).Score <= game.Players.FirstOrDefault(x => x.Id != unit.PlayerId).Score)
             {
-                targetPos = nearestEnemy.Value.Position;
+                //targetPos = nearestEnemy.Value.Position;
             }
 
             return (targetPos, nearestEnemy);
