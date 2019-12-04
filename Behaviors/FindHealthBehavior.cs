@@ -11,7 +11,7 @@ namespace AiCup2019.Behaviors
 
         public UnitAction GetAction(Unit unit, Game game, Unit enemy, Debug debug, LootBox health)
         {
-            var jumpData = _jumpProvider.GetJump(unit, game, health.Position);
+            var jumpData = _jumpProvider.GetJump(unit, game, health.Position, enemy);
 
             var aim = _aimProvider.GetAim(unit, enemy);
 

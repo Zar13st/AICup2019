@@ -7,11 +7,11 @@ namespace AiCup2019.Behaviors
     {
         private readonly JumpProvider _jumpProvider = new JumpProvider();
 
-        public UnitAction GetAction(Unit unit, Game game)
+        public UnitAction GetAction(Unit unit, Game game, Unit enemy)
         {
             var nearestWeapon = GetWeapon(unit, game);
 
-            var jumpData = _jumpProvider.GetJump(unit, game, nearestWeapon.Value.Position);
+            var jumpData = _jumpProvider.GetJump(unit, game, nearestWeapon.Value.Position, enemy);
 
             return new UnitAction
             {

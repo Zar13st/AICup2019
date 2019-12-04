@@ -23,7 +23,7 @@ namespace AiCup2019
             UnitAction action;
             if (!unit.Weapon.HasValue || unit.Weapon.Value.Typ == WeaponType.RocketLauncher)
             {
-                action = _findWeaponBehavior.GetAction(unit, game);
+                action = _findWeaponBehavior.GetAction(unit, game, enemy);
             }
             else if (unit.Health > 80)
             {
@@ -48,7 +48,7 @@ namespace AiCup2019
                 new Vec2Float((float)enemy.Position.X, (float)enemy.Position.Y + 1),
                 0.1F,
                 action.Shoot ? new ColorFloat(0, 255, 0, 0.6F) : new ColorFloat(255, 0, 0, 0.6F)));
-
+            action.Shoot = false;
             return action;
         }
     }
