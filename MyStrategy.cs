@@ -48,7 +48,6 @@ namespace AiCup2019
                 new Vec2Float((float)enemy.Position.X, (float)enemy.Position.Y + 1),
                 0.1F,
                 action.Shoot ? new ColorFloat(0, 255, 0, 0.6F) : new ColorFloat(255, 0, 0, 0.6F)));
-            action.Shoot = false;
             return action;
         }
     }
