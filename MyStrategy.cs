@@ -21,17 +21,18 @@ namespace AiCup2019
             var enemy = enemyUnit.Value;
 
             UnitAction action;
-            if (!unit.Weapon.HasValue || unit.Weapon.Value.Typ == WeaponType.RocketLauncher)
+            var unitHasPistol = unit.Weapon.HasValue && unit.Weapon.Value.Typ == WeaponType.Pistol;
+            if (!unitHasPistol)
             {
-                action = _findWeaponBehavior.GetAction(unit, game, enemy);
+                action = _findWeaponBehavior.GetAction(unit, game, enemy, debug);
             }
-            else if (unit.Health > 80)
+            else if (unit.Health > Extensions.HealthForRunToMed)
             {
                 action = _fullHpRushBehavior.GetAction(unit, game, enemy, debug);
             }
             else
             {
-                var health = _healthProvider.GetHealth(unit, game);
+                var health = _healthProvider.GetHealth(unit, game, enemy);
                 if (health.HasValue)
                 {
                     action = _findHealthBehavior.GetAction(unit, game, enemy, debug, health.Value);

@@ -6,22 +6,28 @@ namespace AiCup2019.Behaviors
     public class FindWeaponBehavior
     {
         private readonly JumpProvider _jumpProvider = new JumpProvider();
+        private readonly AimProvider _aimProvider = new AimProvider();
+        private readonly ShootProvider _shootProvider = new ShootProvider();
 
-        public UnitAction GetAction(Unit unit, Game game, Unit enemy)
+        public UnitAction GetAction(Unit unit, Game game, Unit enemy, Debug debug)
         {
             var nearestWeapon = GetWeapon(unit, game);
 
             var jumpData = _jumpProvider.GetJump(unit, game, nearestWeapon.Value.Position, enemy);
+
+            var aim = _aimProvider.GetAim(unit, enemy);
+
+            var shoot = _shootProvider.IsTargetInSight(unit, enemy, game, debug);
 
             return new UnitAction
             {
                 Velocity = (nearestWeapon.Value.Position.X - unit.Position.X) * 1000,
                 Jump = jumpData.jump,
                 JumpDown = jumpData.jumpDown,
-                Aim = new Vec2Double(0, 0),
-                Shoot = false,
+                Aim = aim,
+                Shoot = unit.Weapon.HasValue && shoot,
                 Reload = false,
-                SwapWeapon = !unit.Weapon.HasValue || unit.Weapon?.Typ == WeaponType.RocketLauncher,
+                SwapWeapon = true,
                 PlantMine = false
             };
         }
@@ -33,7 +39,7 @@ namespace AiCup2019.Behaviors
             {
                 if (!(lootBox.Item is Item.Weapon weapon)) continue;
 
-                if (weapon.WeaponType == WeaponType.RocketLauncher) continue;
+                if (weapon.WeaponType != WeaponType.Pistol) continue;
 
                 if (!nearestWeapon.HasValue || unit.Position.DistanceSqr(lootBox.Position) < unit.Position.DistanceSqr(nearestWeapon.Value.Position))
                 {

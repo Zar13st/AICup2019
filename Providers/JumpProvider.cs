@@ -34,7 +34,10 @@ namespace AiCup2019.Providers
                 jump = true;
             }
 
-            if (Math.Abs(unit.Position.X - enemy.Position.X) < 0.9 && unit.Position.Y - enemy.Position.Y > 1 && unit.Position.Y - enemy.Position.Y < 3)
+            if (Math.Abs(unit.Position.X - enemy.Position.X) < 0.9 && 
+                unit.Position.Y - enemy.Position.Y > 1 &&
+                unit.Position.Y - enemy.Position.Y < 3 &&
+                unit.Health > Extensions.HealthForRunToMed)
             {
                 jump = false;
             }
