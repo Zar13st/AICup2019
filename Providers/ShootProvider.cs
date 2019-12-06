@@ -22,7 +22,7 @@ namespace AiCup2019.Providers
 
             //цель на одной прямой
             var shootAngle = GetAngle(playerXdouble, playerYdouble, enemyXdouble, enemyYdouble);
-            if (double.IsInfinity(shootAngle))
+            if (double.IsInfinity(shootAngle) || shootAngle > 1000000 || shootAngle < -1000000)
             {
                 var topAngle = GetAngle(playerXdouble, playerYdouble, playerX + 1, playerY + 1);
                 if (double.IsInfinity(topAngle))
