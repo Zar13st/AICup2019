@@ -138,12 +138,12 @@ namespace AiCup2019.Providers
                         var bot = new Vec2Double(i, j + 1);
                         var isCrossTile = IsCrossTile(playerXdouble, playerYdouble, shootAngle, ref top, ref bot);
 
-                        debug.Draw(new CustomData.Polygon(new ColoredVertex[]
-                        {
-                            new ColoredVertex(new Vec2Float((float)playerXdouble, (float)playerYdouble), isCrossTile ? new ColorFloat(255,0,0,0.4f) : new ColorFloat(0,255,0,0.4f)),
-                            new ColoredVertex(new Vec2Float(i, j + 1), isCrossTile ? new ColorFloat(255,0,0,0.4f) : new ColorFloat(0,255,0,0.4f)),
-                            new ColoredVertex(new Vec2Float(i+1, j), isCrossTile ? new ColorFloat(255,0,0,0.4f) : new ColorFloat(0,255,0,0.4f)),
-                        }));
+                        //debug.Draw(new CustomData.Polygon(new ColoredVertex[]
+                        //{
+                        //    new ColoredVertex(new Vec2Float((float)playerXdouble, (float)playerYdouble), isCrossTile ? new ColorFloat(255,0,0,0.4f) : new ColorFloat(0,255,0,0.4f)),
+                        //    new ColoredVertex(new Vec2Float(i, j + 1), isCrossTile ? new ColorFloat(255,0,0,0.4f) : new ColorFloat(0,255,0,0.4f)),
+                        //    new ColoredVertex(new Vec2Float(i+1, j), isCrossTile ? new ColorFloat(255,0,0,0.4f) : new ColorFloat(0,255,0,0.4f)),
+                        //}));
 
                         if (isCrossTile) return false;
                     }
@@ -165,12 +165,12 @@ namespace AiCup2019.Providers
                         var bot = new Vec2Double(i + 1, j + 1);
                         var isCrossTile = IsCrossTile(playerXdouble, playerYdouble, shootAngle, ref top, ref bot);
 
-                        debug.Draw(new CustomData.Polygon(new ColoredVertex[]
-                        {
-                            new ColoredVertex(new Vec2Float((float)playerXdouble, (float)playerYdouble), isCrossTile ? new ColorFloat(255,0,0,0.4f) : new ColorFloat(0,255,0,0.4f)),
-                            new ColoredVertex(new Vec2Float(i+1, j + 1), isCrossTile ? new ColorFloat(255,0,0,0.4f) : new ColorFloat(0,255,0,0.4f)),
-                            new ColoredVertex(new Vec2Float(i, j), isCrossTile ? new ColorFloat(255,0,0,0.4f) : new ColorFloat(0,255,0,0.4f)),
-                        }));
+                        //debug.Draw(new CustomData.Polygon(new ColoredVertex[]
+                        //{
+                        //    new ColoredVertex(new Vec2Float((float)playerXdouble, (float)playerYdouble), isCrossTile ? new ColorFloat(255,0,0,0.4f) : new ColorFloat(0,255,0,0.4f)),
+                        //    new ColoredVertex(new Vec2Float(i+1, j + 1), isCrossTile ? new ColorFloat(255,0,0,0.4f) : new ColorFloat(0,255,0,0.4f)),
+                        //    new ColoredVertex(new Vec2Float(i, j), isCrossTile ? new ColorFloat(255,0,0,0.4f) : new ColorFloat(0,255,0,0.4f)),
+                        //}));
 
                         if (isCrossTile) return false;
                     }
@@ -192,12 +192,12 @@ namespace AiCup2019.Providers
                         var bot = new Vec2Double(i, j);
                         var isCrossTile = IsCrossTile(playerXdouble, playerYdouble, shootAngle, ref top, ref bot);
 
-                        debug.Draw(new CustomData.Polygon(new ColoredVertex[]
-                        {
-                            new ColoredVertex(new Vec2Float((float)playerXdouble, (float)playerYdouble), isCrossTile ? new ColorFloat(255,0,0,0.4f) : new ColorFloat(0,255,0,0.4f)),
-                            new ColoredVertex(new Vec2Float(i + 1, j + 1), isCrossTile ? new ColorFloat(255,0,0,0.4f) : new ColorFloat(0,255,0,0.4f)),
-                            new ColoredVertex(new Vec2Float(i, j), isCrossTile ? new ColorFloat(255,0,0,0.4f) : new ColorFloat(0,255,0,0.4f)),
-                        }));
+                        //debug.Draw(new CustomData.Polygon(new ColoredVertex[]
+                        //{
+                        //    new ColoredVertex(new Vec2Float((float)playerXdouble, (float)playerYdouble), isCrossTile ? new ColorFloat(255,0,0,0.4f) : new ColorFloat(0,255,0,0.4f)),
+                        //    new ColoredVertex(new Vec2Float(i + 1, j + 1), isCrossTile ? new ColorFloat(255,0,0,0.4f) : new ColorFloat(0,255,0,0.4f)),
+                        //    new ColoredVertex(new Vec2Float(i, j), isCrossTile ? new ColorFloat(255,0,0,0.4f) : new ColorFloat(0,255,0,0.4f)),
+                        //}));
 
                         if (isCrossTile) return false;
                     }
@@ -219,12 +219,12 @@ namespace AiCup2019.Providers
                         var bot = new Vec2Double(i + 1, j);
                         var isCrossTile = IsCrossTile(playerXdouble, playerYdouble, shootAngle, ref top, ref bot);
 
-                        debug.Draw(new CustomData.Polygon(new ColoredVertex[]
-                        {
-                            new ColoredVertex(new Vec2Float((float)playerXdouble, (float)playerYdouble), isCrossTile ? new ColorFloat(255,0,0,0.4f) : new ColorFloat(0,255,0,0.4f)),
-                            new ColoredVertex(new Vec2Float(i , j + 1), isCrossTile ? new ColorFloat(255,0,0,0.4f) : new ColorFloat(0,255,0,0.4f)),
-                            new ColoredVertex(new Vec2Float(i +1, j), isCrossTile ? new ColorFloat(255,0,0,0.4f) : new ColorFloat(0,255,0,0.4f)),
-                        }));
+                        //debug.Draw(new CustomData.Polygon(new ColoredVertex[]
+                        //{
+                        //    new ColoredVertex(new Vec2Float((float)playerXdouble, (float)playerYdouble), isCrossTile ? new ColorFloat(255,0,0,0.4f) : new ColorFloat(0,255,0,0.4f)),
+                        //    new ColoredVertex(new Vec2Float(i , j + 1), isCrossTile ? new ColorFloat(255,0,0,0.4f) : new ColorFloat(0,255,0,0.4f)),
+                        //    new ColoredVertex(new Vec2Float(i +1, j), isCrossTile ? new ColorFloat(255,0,0,0.4f) : new ColorFloat(0,255,0,0.4f)),
+                        //}));
 
                         if (isCrossTile) return false;
                     }
