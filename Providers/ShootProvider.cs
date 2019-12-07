@@ -20,6 +20,66 @@ namespace AiCup2019.Providers
             double enemyXdouble = target.Position.X;
             double enemyYdouble = target.Position.Y + 1;
 
+            if (playerY == enemyY)
+            {
+                if (playerX < enemyX)
+                {
+                    for (int i = playerX + 1; i < enemyX; i++)
+                    {
+                        if (game.Level.Tiles[i][playerY] == Tile.Wall) return false;
+                    }
+                }
+                else if (playerX > enemyX)
+                {
+                    for (int i = playerX - 1; i > enemyX; i--)
+                    {
+                        if (game.Level.Tiles[i][playerY] == Tile.Wall) return false;
+                    }
+                }
+
+                return true;
+            }
+
+            if (playerY == enemyY + 1)
+            {
+                if (playerX < enemyX)
+                {
+                    for (int i = playerX + 1; i < enemyX; i++)
+                    {
+                        if (game.Level.Tiles[i][playerY] == Tile.Wall) return false;
+                    }
+                }
+                else if (playerX > enemyX)
+                {
+                    for (int i = playerX - 1; i > enemyX; i--)
+                    {
+                        if (game.Level.Tiles[i][playerY] == Tile.Wall) return false;
+                    }
+                }
+
+                return true;
+            }
+
+            if (playerY == enemyY -1)
+            {
+                if (playerX < enemyX)
+                {
+                    for (int i = playerX + 1; i < enemyX; i++)
+                    {
+                        if (game.Level.Tiles[i][playerY] == Tile.Wall) return false;
+                    }
+                }
+                else if (playerX > enemyX)
+                {
+                    for (int i = playerX - 1; i > enemyX; i--)
+                    {
+                        if (game.Level.Tiles[i][playerY] == Tile.Wall) return false;
+                    }
+                }
+
+                return true;
+            }
+
             //цель на одной прямой
             var shootAngle = GetAngle(playerXdouble, playerYdouble, enemyXdouble, enemyYdouble);
             if (double.IsInfinity(shootAngle) || shootAngle > 1000000 || shootAngle < -1000000)
@@ -63,8 +123,10 @@ namespace AiCup2019.Providers
                 return true;
             }
 
+            
+
             // </
-            if (playerX >= enemyX && playerY > enemyY)
+            if (playerX >= enemyX && playerY >= enemyY)
             {
                 for (int i = playerX; i >= enemyX; i --)
                 {
@@ -91,7 +153,7 @@ namespace AiCup2019.Providers
             }
 
             // <\
-            if (playerX > enemyX && playerY <= enemyY)
+            if (playerX > enemyX && playerY < enemyY)
             {
                 for (int i = playerX; i >= enemyX; i--)
                 {

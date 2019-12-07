@@ -4,7 +4,7 @@ namespace AiCup2019
 {
     public static class Extensions
     {
-        public static int HealthForRunToMed = 60;
+        public static int HealthForRunToMed = 80;
 
         public static double DistanceSqr(this Vec2Double a, Vec2Double b)
         {
