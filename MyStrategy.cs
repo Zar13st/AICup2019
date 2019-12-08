@@ -23,13 +23,13 @@ namespace AiCup2019
             var enemy = enemyUnit.Value;
 
             var map = new Map(game){ MGrid = new byte[64, 64] }; 
-            for (int x = 0; x < 40; x++)
+            for (int x = 1; x < 39; x++)
             {
-                for (int y = 0; y < 30; y++)
+                for (int y = 1; y < 29; y++)
                 {
                     if (game.Level.Tiles[x][y] != Tile.Wall && !(game.Level.Tiles[x][y + 1] == Tile.Wall && game.Level.Tiles[x][y - 1] == Tile.Wall))
                     {
-                        if (game.Level.Tiles[x][y] != Tile.JumpPad)
+                        if (game.Level.Tiles[x][y] != Tile.JumpPad && game.Level.Tiles[x + 1][y] != Tile.JumpPad && game.Level.Tiles[x - 1][y] != Tile.JumpPad)
                         {
                             map.MGrid[x, y] = 1;
                         }
@@ -74,7 +74,7 @@ namespace AiCup2019
             //    0.1F,
             //    action.Shoot ? new ColorFloat(0, 255, 0, 0.6F) : new ColorFloat(255, 0, 0, 0.6F)));
 
-            action.Shoot = false;
+            //action.Shoot = false;
             //action.Velocity = 0;
             //action.Jump = false;
             return action;
