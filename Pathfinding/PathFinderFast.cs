@@ -65,7 +65,7 @@ namespace AiCup2019.Pathfinding
         // Heap variables are initializated to default, but I like to do it anyway
         private byte[,] mGrid = null;
         private PriorityQueueB<Location> mOpen = null;
-        private List<Vector2i> mClose = null;
+        private List<Vector2I> mClose = null;
         private bool mStop = false;
         private bool mStopped = true;
         private HeuristicFormula mFormula = HeuristicFormula.DiagonalShortCut;
@@ -121,7 +121,7 @@ namespace AiCup2019.Pathfinding
             {
                 nodes = new List<PathFinderNodeFast>[mGridX * mGridY];
                 touchedLocations = new Stack<int>(mGridX * mGridY);
-                mClose = new List<Vector2i>(mGridX * mGridY);
+                mClose = new List<Vector2I>(mGridX * mGridY);
             }
 
             for (var i = 0; i < nodes.Length; ++i)
@@ -209,7 +209,7 @@ namespace AiCup2019.Pathfinding
         //    mStop = true;
         //}
 
-        public List<Vector2i> FindPath(Vector2i start, Vector2i end, int characterWidth, int characterHeight, short jumpHeight, short jumpPadHeight)
+        public List<Vector2I> FindPath(Vector2I start, Vector2I end, int characterWidth, int characterHeight, short jumpHeight, short jumpPadHeight)
         {
             var maxCharacterJumpHeight = jumpHeight;
 
@@ -218,7 +218,7 @@ namespace AiCup2019.Pathfinding
                 nodes[touchedLocations.Pop()].Clear();
             }
 
-            if (mGrid[end.x, end.y] == 0)
+            if (mGrid[end.X, end.Y] == 0)
             {
                 return null;
             }
@@ -231,21 +231,21 @@ namespace AiCup2019.Pathfinding
             mCloseNodeValue += 2;
             mOpen.Clear();
 
-            mLocation.xy = (start.y << mGridXLog2) + start.x;
+            mLocation.xy = (start.Y << mGridXLog2) + start.X;
             mLocation.z = 0;
-            mEndLocation = (end.y << mGridXLog2) + end.x;
+            mEndLocation = (end.Y << mGridXLog2) + end.X;
 
             var firstNode = new PathFinderNodeFast
             {
                 G = 0,
                 F = mHEstimate,
-                PX = (ushort) start.x,
-                PY = (ushort) start.y,
+                PX = (ushort) start.X,
+                PY = (ushort) start.Y,
                 PZ = 0,
                 Status = mOpenNodeValue
             };
 
-            if (mMap.IsGround(start.x, start.y - 1))
+            if (mMap.IsGround(start.X, start.Y))
             {
                 firstNode.JumpLength = 0;
             }
@@ -311,7 +311,7 @@ namespace AiCup2019.Pathfinding
                     if (mGrid[mNewLocationX, mNewLocationY] == 0)
                         goto CHILDREN_LOOP_END;
 
-                    if (mMap.IsGround(mNewLocationX, mNewLocationY - 1))
+                    if (mMap.IsGround(mNewLocationX, mNewLocationY))
                         onGround = true;
                     else if (mGrid[mNewLocationX, mNewLocationY + characterHeight] == 0)
                         atCeiling = true;
@@ -383,27 +383,27 @@ namespace AiCup2019.Pathfinding
                     {
                         default:
                         case HeuristicFormula.Manhattan:
-                            mH = mHEstimate * (Math.Abs(mNewLocationX - end.x) + Math.Abs(mNewLocationY - end.y));
+                            mH = mHEstimate * (Math.Abs(mNewLocationX - end.X) + Math.Abs(mNewLocationY - end.Y));
                             break;
                         case HeuristicFormula.MaxDXDY:
-                            mH = mHEstimate * (Math.Max(Math.Abs(mNewLocationX - end.x), Math.Abs(mNewLocationY - end.y)));
+                            mH = mHEstimate * (Math.Max(Math.Abs(mNewLocationX - end.X), Math.Abs(mNewLocationY - end.Y)));
                             break;
                         case HeuristicFormula.DiagonalShortCut:
-                            var h_diagonal = Math.Min(Math.Abs(mNewLocationX - end.x), Math.Abs(mNewLocationY - end.y));
-                            var h_straight = (Math.Abs(mNewLocationX - end.x) + Math.Abs(mNewLocationY - end.y));
+                            var h_diagonal = Math.Min(Math.Abs(mNewLocationX - end.X), Math.Abs(mNewLocationY - end.Y));
+                            var h_straight = (Math.Abs(mNewLocationX - end.X) + Math.Abs(mNewLocationY - end.Y));
                             mH = (mHEstimate * 2) * h_diagonal + mHEstimate * (h_straight - 2 * h_diagonal);
                             break;
                         case HeuristicFormula.Euclidean:
-                            mH = (int)(mHEstimate * Math.Sqrt(Math.Pow((mNewLocationY - end.x), 2) + Math.Pow((mNewLocationY - end.y), 2)));
+                            mH = (int)(mHEstimate * Math.Sqrt(Math.Pow((mNewLocationY - end.X), 2) + Math.Pow((mNewLocationY - end.Y), 2)));
                             break;
                         case HeuristicFormula.EuclideanNoSQR:
-                            mH = (int)(mHEstimate * (Math.Pow((mNewLocationX - end.x), 2) + Math.Pow((mNewLocationY - end.y), 2)));
+                            mH = (int)(mHEstimate * (Math.Pow((mNewLocationX - end.X), 2) + Math.Pow((mNewLocationY - end.Y), 2)));
                             break;
                         case HeuristicFormula.Custom1:
-                            var dxy = new Vector2i(Math.Abs(end.x - mNewLocationX), Math.Abs(end.y - mNewLocationY));
-                            var Orthogonal = Math.Abs(dxy.x - dxy.y);
-                            var Diagonal = Math.Abs(((dxy.x + dxy.y) - Orthogonal) / 2);
-                            mH = mHEstimate * (Diagonal + Orthogonal + dxy.x + dxy.y);
+                            var dxy = new Vector2I(Math.Abs(end.X - mNewLocationX), Math.Abs(end.Y - mNewLocationY));
+                            var Orthogonal = Math.Abs(dxy.X - dxy.Y);
+                            var Diagonal = Math.Abs(((dxy.X + dxy.Y) - Orthogonal) / 2);
+                            mH = mHEstimate * (Diagonal + Orthogonal + dxy.X + dxy.Y);
                             break;
                     }
 
@@ -433,8 +433,8 @@ namespace AiCup2019.Pathfinding
             if (mFound)
             {
                 mClose.Clear();
-                var posX = end.x;
-                var posY = end.y;
+                var posX = end.X;
+                var posY = end.Y;
 
                 var fPrevNodeTmp = new PathFinderNodeFast();
                 var fNodeTmp = nodes[mEndLocation][0];
@@ -444,20 +444,20 @@ namespace AiCup2019.Pathfinding
 
                 var loc = (fNodeTmp.PY << mGridXLog2) + fNodeTmp.PX;
 
-                while (fNode.x != fNodeTmp.PX || fNode.y != fNodeTmp.PY)
+                while (fNode.X != fNodeTmp.PX || fNode.Y != fNodeTmp.PY)
                 {
                     var fNextNodeTmp = nodes[loc][fNodeTmp.PZ];
 
                     if ((mClose.Count == 0)
-                        || (mMap.IsOneWayPlatform(fNode.x, fNode.y - 1))
-                        || (mGrid[fNode.x, fNode.y - 1] == 0 && mMap.IsOneWayPlatform(fPrevNode.x, fPrevNode.y - 1))
+                        || (mMap.IsOneWayPlatform(fNode.X, fNode.Y))
+                        || (mGrid[fNode.X, fNode.Y - 1] == 0 && mMap.IsOneWayPlatform(fPrevNode.X, fPrevNode.Y))
                         || (fNodeTmp.JumpLength == 3)
                         || (fNextNodeTmp.JumpLength != 0 && fNodeTmp.JumpLength == 0)                                  //mark jumps starts
                         || (fNodeTmp.JumpLength == 0 && fPrevNodeTmp.JumpLength != 0)                                  //mark landings
-                        || (fNode.y > mClose[mClose.Count - 1].y && fNode.y > fNodeTmp.PY)
-                        || (fNode.y < mClose[mClose.Count - 1].y && fNode.y < fNodeTmp.PY)
-                        || ((mMap.IsGround(fNode.x - 1, fNode.y) || mMap.IsGround(fNode.x + 1, fNode.y))
-                            && fNode.y != mClose[mClose.Count - 1].y && fNode.x != mClose[mClose.Count - 1].x))
+                        || (fNode.Y > mClose[mClose.Count - 1].Y && fNode.Y > fNodeTmp.PY)
+                        || (fNode.Y < mClose[mClose.Count - 1].Y && fNode.Y < fNodeTmp.PY)
+                        || ((mMap.IsGround(fNode.X - 1, fNode.Y + 1) || mMap.IsGround(fNode.X + 1, fNode.Y + 1))
+                            && fNode.Y != mClose[mClose.Count - 1].Y && fNode.X != mClose[mClose.Count - 1].X))
                         mClose.Add(fNode);
 
                     fPrevNode = fNode;
@@ -466,7 +466,7 @@ namespace AiCup2019.Pathfinding
                     fPrevNodeTmp = fNodeTmp;
                     fNodeTmp = fNextNodeTmp;
                     loc = (fNodeTmp.PY << mGridXLog2) + fNodeTmp.PX;
-                    fNode = new Vector2i(posX, posY);
+                    fNode = new Vector2I(posX, posY);
                 }
 
                 mClose.Add(fNode);
@@ -500,15 +500,15 @@ namespace AiCup2019.Pathfinding
         }
     }
 
-    public class Vector2i
+    public struct Vector2I
     {
-        public Vector2i(int _x, int _y)
+        public Vector2I(int x, int y)
         {
-            x = _x;
-            y = _y;
+            X = x;
+            Y = y;
         }
 
-        public int x;
-        public int y;
+        public int X;
+        public int Y;
     }
 }

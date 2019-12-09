@@ -1,7 +1,6 @@
-using System;
-using AiCup2019.Behaviors;
 using AiCup2019.Model;
 using AiCup2019.Pathfinding;
+using aicup2019.Providers;
 using AiCup2019.Providers;
 
 namespace AiCup2019
@@ -9,12 +8,10 @@ namespace AiCup2019
     public class MyStrategy
     {
         private readonly EnemyProvider _enemyProvider = new EnemyProvider();
-        private readonly HealthProvider _healthProvider = new HealthProvider();
+        private readonly TargetProvider _targetProvider = new TargetProvider();
+        private readonly ActionProvider _actionProvider = new ActionProvider();
 
-        private readonly FindWeaponBehavior _findWeaponBehavior = new FindWeaponBehavior();
-        private readonly FullHpRushBehavior _fullHpRushBehavior = new FullHpRushBehavior();
-        private readonly FindHealthBehavior _findHealthBehavior = new FindHealthBehavior();
-
+        private readonly Map _map = new Map();
 
         public UnitAction GetAction(Unit unit, Game game, Debug debug)
         {
@@ -22,51 +19,12 @@ namespace AiCup2019
             if (!enemyUnit.HasValue) return new UnitAction();
             var enemy = enemyUnit.Value;
 
-            var map = new Map(game){ MGrid = new byte[64, 64] }; 
-            for (int x = 1; x < 39; x++)
-            {
-                for (int y = 1; y < 29; y++)
-                {
-                    if (game.Level.Tiles[x][y] != Tile.Wall && !(game.Level.Tiles[x][y + 1] == Tile.Wall && game.Level.Tiles[x][y - 1] == Tile.Wall))
-                    {
-                        if (game.Level.Tiles[x][y] != Tile.JumpPad && game.Level.Tiles[x + 1][y] != Tile.JumpPad && game.Level.Tiles[x - 1][y] != Tile.JumpPad)
-                        {
-                            map.MGrid[x, y] = 1;
-                        }
-                    }
-                    else
-                    {
-                        debug.Draw(new CustomData.Rect(new Vec2Float(x, y), new Vec2Float(1, 1), new ColorFloat(255, 0, 0, 0.4F)));
-                    }
-                }
-            }
+            _map.SetMap(game, debug, enemy);
 
+            var target = _targetProvider.GetTarget(unit, game, enemy);
 
-
-
-            UnitAction action;
-            var unitHasPistol = unit.Weapon.HasValue && unit.Weapon.Value.Typ == WeaponType.Pistol;
-            if (!unitHasPistol)
-            {
-                action = _findWeaponBehavior.GetAction(unit, game, enemy, debug, map);
-            }
-            else if (unit.Health > Extensions.HealthForRunToMed)
-            {
-                action = _fullHpRushBehavior.GetAction(unit, game, enemy, debug);
-            }
-            else
-            {
-                var health = _healthProvider.GetHealth(unit, game, enemy);
-                if (health.HasValue)
-                {
-                    action = _findHealthBehavior.GetAction(unit, game, enemy, debug, health.Value);
-                }
-                else
-                {
-                    action = _fullHpRushBehavior.GetAction(unit, game, enemy, debug);
-                }
-            }
-
+            var action = _actionProvider.GetAction(unit, game, enemy, debug, target, _map);
+            
             //debug.Draw(new CustomData.Log($"X: {unit.Position.X:F1}, Y: {unit.Position.Y:F1}"));
             //debug.Draw(new CustomData.Log($"X: {enemy.Position.X:F1}, Y: {enemy.Position.Y:F1}"));
             //debug.Draw(new CustomData.Line(new Vec2Float((float)unit.Position.X, (float)unit.Position.Y + 1),
@@ -74,9 +32,9 @@ namespace AiCup2019
             //    0.1F,
             //    action.Shoot ? new ColorFloat(0, 255, 0, 0.6F) : new ColorFloat(255, 0, 0, 0.6F)));
 
-            //action.Shoot = false;
             //action.Velocity = 0;
             //action.Jump = false;
+            action.Shoot = false;
             return action;
         }
     }
