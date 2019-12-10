@@ -1,4 +1,5 @@
 ﻿using AiCup2019.Model;
+using aicup2019.Pathfinding;
 using AiCup2019.Providers;
 
 namespace AiCup2019.Pathfinding
@@ -7,29 +8,29 @@ namespace AiCup2019.Pathfinding
     {
         private readonly HealthProvider _healthProvider = new HealthProvider();
 
-        public Vec2Double GetTarget(Unit unit, Game game, Unit enemy)
+        public (Vec2Double targetPos, TargetEnum targetType) GetTarget(Unit unit, Game game, Unit enemy)
         {
             var unitHasPistol = unit.Weapon.HasValue && unit.Weapon.Value.Typ == WeaponType.Pistol;
             if (!unitHasPistol)
             {
                 var nearestWeapon = GetWeapon(unit, game);
-                return nearestWeapon.Position;
+                return (nearestWeapon.Position, TargetEnum.Weapon);
 
             }
             else if (unit.Health > Extensions.HealthForRunToMed)
             {
-                return enemy.Position;
+                return (enemy.Position, TargetEnum.Enemy);
             }
             else
             {
                 var health = _healthProvider.GetHealth(unit, game, enemy);
                 if (health.HasValue)
                 {
-                    return health.Value.Position;
+                    return (health.Value.Position, TargetEnum.Health);
                 }
                 else
                 {
-                    return enemy.Position;
+                    return (enemy.Position, TargetEnum.Enemy);
                 }
             }
         }

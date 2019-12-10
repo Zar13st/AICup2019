@@ -1,4 +1,5 @@
 using AiCup2019.Model;
+using aicup2019.Pathfinding;
 using AiCup2019.Pathfinding;
 using aicup2019.Providers;
 using AiCup2019.Providers;
@@ -10,6 +11,7 @@ namespace AiCup2019
         private readonly EnemyProvider _enemyProvider = new EnemyProvider();
         private readonly TargetProvider _targetProvider = new TargetProvider();
         private readonly ActionProvider _actionProvider = new ActionProvider();
+        private readonly JumpPadHelper _jumpPadHelper = new JumpPadHelper();
 
         private readonly Map _map = new Map();
 
@@ -19,11 +21,12 @@ namespace AiCup2019
             if (!enemyUnit.HasValue) return new UnitAction();
             var enemy = enemyUnit.Value;
 
-            _map.SetMap(game, debug, enemy);
+            var (pos, targetType) = _targetProvider.GetTarget(unit, game, enemy);
+            var targetPos = _jumpPadHelper.Shift(pos, game);
 
-            var target = _targetProvider.GetTarget(unit, game, enemy);
+            _map.SetMap(game, debug, enemy, targetType);
 
-            var action = _actionProvider.GetAction(unit, game, enemy, debug, target, _map);
+            var action = _actionProvider.GetAction(unit, game, enemy, debug, targetPos, _map);
             
             //debug.Draw(new CustomData.Log($"X: {unit.Position.X:F1}, Y: {unit.Position.Y:F1}"));
             //debug.Draw(new CustomData.Log($"X: {enemy.Position.X:F1}, Y: {enemy.Position.Y:F1}"));
@@ -34,7 +37,7 @@ namespace AiCup2019
 
             //action.Velocity = 0;
             //action.Jump = false;
-            action.Shoot = false;
+            //action.Shoot = false;
             return action;
         }
     }
