@@ -20,6 +20,15 @@ namespace AiCup2019.Providers
             double enemyXdouble = target.Position.X;
             double enemyYdouble = target.Position.Y + 1;
 
+            if (playerX != enemyX && playerX != enemyX + 1 && playerX != enemyX - 1)
+            {
+                if ((playerX < enemyX && game.Level.Tiles[playerX + 1][playerY - 1] == Tile.Wall) ||
+                    (playerX > enemyX && game.Level.Tiles[playerX - 1][playerY - 1] == Tile.Wall))
+                {
+                    return false;
+                }
+            }
+
             if (playerY == enemyY)
             {
                 if (playerX < enemyX)
