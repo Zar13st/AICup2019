@@ -25,7 +25,7 @@ namespace aicup2019.Providers
             var shoot = _shootProvider.IsTargetInSight(unit, enemy, game, debug);
 
             if (map.IsGround((int)unit.Position.X, (int)unit.Position.Y) &&
-                (_path == null || _lastTargetX != (int)target.X || _lastTargetY != (int)target.Y || _pathLength > 15))
+                (_path == null || _lastTargetX != (int)target.X || _lastTargetY != (int)target.Y || _pathLength > 60))
             {
                 DoPath(map, unit, target);
             }
@@ -35,16 +35,18 @@ namespace aicup2019.Providers
 
             if (_path != null && _path.Count > 0)
             {
-                //var last = new Vec2Float(_path[0].X, _path[0].Y);
-                //foreach (var vector2I in _path)
-                //{
-                //    debug.Draw(new CustomData.Line(last,new Vec2Float(vector2I.X + 0.5f, vector2I.Y + 0.5f),0.1F,new ColorFloat(0, 255, 0, 0.6F)));
-                //    last = new Vec2Float(vector2I.X + 0.5f, vector2I.Y + 0.5f);
-                //}
+                var last = new Vec2Float(_path[0].X, _path[0].Y);
+                foreach (var vector2I in _path)
+                {
+                    debug.Draw(new CustomData.Line(last, new Vec2Float(vector2I.X + 0.5f, vector2I.Y + 0.5f), 0.1F, new ColorFloat(0, 255, 0, 0.6F)));
+                    last = new Vec2Float(vector2I.X + 0.5f, vector2I.Y + 0.5f);
+                }
 
                 var next = _path[_i];
                 if (next.X == (int)unit.Position.X && next.Y == (int)unit.Position.Y)
                 {
+                    _pathLength = 0;
+
                     if (_i < _path.Count - 1)
                     {
                         _i++;

@@ -37,7 +37,7 @@ namespace AiCup2019
 
             //action.Velocity = 0;
             //action.Jump = false;
-            //action.Shoot = false;
+            action.Shoot = false;
             return action;
         }
     }

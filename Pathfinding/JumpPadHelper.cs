@@ -11,12 +11,12 @@ namespace aicup2019.Pathfinding
 
             if (game.Level.Tiles[targetX + 1][targetY] == Tile.JumpPad)
             {
-                return new Vec2Double(target.X - 0.4f, target.Y);
+                return new Vec2Double(target.X - 0.51f, target.Y);
             }
 
             if (game.Level.Tiles[targetX - 1][targetY] == Tile.JumpPad)
             {
-                return new Vec2Double(target.X + 0.4f, target.Y);
+                return new Vec2Double(target.X + 0.51f, target.Y);
             }
 
             return target;

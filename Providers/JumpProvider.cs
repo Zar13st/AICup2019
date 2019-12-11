@@ -13,12 +13,22 @@ namespace AiCup2019.Providers
 
         public (bool jump, bool jumpDown) GetJumpForPath(Unit unit, Game game, Vector2I next)
         {
-            if ((int)(unit.Position.X) != _lastPlatformX && (int)(unit.Position.Y) != _lastPlatformY + 1 && IsOverPlatform(unit, game))
+            //if ((int)(unit.Position.X) != _lastPlatformX && (int)(unit.Position.Y) != _lastPlatformY + 1 && IsOverPlatform(unit, game))
+            //{
+            //    _lastPlatformX = (int) (unit.Position.X);
+            //    _lastPlatformY = (int) (unit.Position.Y) - 1;
+            //    return (false, false);
+            //}
+
+            var isOnPlatform = IsOnPlatform(unit, game);
+
+            if (_lastTickOnPlatform && !isOnPlatform)
             {
-                _lastPlatformX = (int) (unit.Position.X);
-                _lastPlatformY = (int) (unit.Position.Y) - 1;
+                _lastTickOnPlatform = false;
                 return (false, false);
             }
+
+            _lastTickOnPlatform = isOnPlatform;
 
             bool jump = next.Y > (int)unit.Position.Y;
 
