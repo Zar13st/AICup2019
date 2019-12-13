@@ -35,12 +35,12 @@ namespace aicup2019.Providers
 
             if (_path != null && _path.Count > 0)
             {
-                var last = new Vec2Float(_path[0].X, _path[0].Y);
-                foreach (var vector2I in _path)
-                {
-                    debug.Draw(new CustomData.Line(last, new Vec2Float(vector2I.X + 0.5f, vector2I.Y + 0.5f), 0.1F, new ColorFloat(0, 255, 0, 0.6F)));
-                    last = new Vec2Float(vector2I.X + 0.5f, vector2I.Y + 0.5f);
-                }
+                //var last = new Vec2Float(_path[0].X, _path[0].Y);
+                //foreach (var vector2I in _path)
+                //{
+                //    debug.Draw(new CustomData.Line(last, new Vec2Float(vector2I.X + 0.5f, vector2I.Y + 0.5f), 0.1F, new ColorFloat(0, 255, 0, 0.6F)));
+                //    last = new Vec2Float(vector2I.X + 0.5f, vector2I.Y + 0.5f);
+                //}
 
                 var next = _path[_i];
                 if (next.X == (int)unit.Position.X && next.Y == (int)unit.Position.Y)
