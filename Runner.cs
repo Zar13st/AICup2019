@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Sockets;
+using AiCup2019.Model;
 
 namespace AiCup2019
 {
@@ -108,7 +109,7 @@ namespace AiCup2019
                         }
                         else if (unit.Id == _secondPlayerId)
                         {
-                            //TODO: second player strategy
+                            actions.Add(unit.Id, new UnitAction());
                         }
                     }
                 }

@@ -16,7 +16,7 @@ namespace aicup2019.Providers
 
         public UnitAction GetBoomAction(Unit unit, Game game, Unit enemy, Debug debug, Vec2Double target, Map map, WeaponType weaponType)
         {
-            if (map.IsGround((int)unit.Position.X, (int)unit.Position.Y) && enemy.Health <= 50)
+            if (map.CanPlantMine((int)unit.Position.X, (int)unit.Position.Y) && enemy.Health <= 50)
             {
                 Active = true;
 
@@ -34,8 +34,6 @@ namespace aicup2019.Providers
             }
             else
             {
-
-
                 return new UnitAction
                 {
                     Velocity = 0.5d >= unit.Position.X - target.X ? 10 : -10,
@@ -52,7 +50,7 @@ namespace aicup2019.Providers
 
         public UnitAction GetBigBoomAction(Unit unit, Game game, Unit enemy, Debug debug, Vec2Double target, Map map, WeaponType weaponType)
         {
-            if (map.IsGround((int) unit.Position.X, (int) unit.Position.Y))
+            if (map.CanPlantMine((int) unit.Position.X, (int) unit.Position.Y))
             {
                 Active = true;
 
@@ -93,11 +91,11 @@ namespace aicup2019.Providers
                     Velocity = 0.5d >= unit.Position.X - target.X ? 10 : -10,
                     Jump = false,
                     JumpDown = false,
-                    Aim = new Vec2Double(0, -1),
-                    Shoot = false,
+                    Aim = _aimProvider.GetAim(unit, enemy),
+                    Shoot = _shootProvider.IsTargetInSight(unit, enemy, game, debug),
                     Reload = false,
                     SwapWeapon = false,
-                    PlantMine = true,
+                    PlantMine = false,
                 };
             }
         }

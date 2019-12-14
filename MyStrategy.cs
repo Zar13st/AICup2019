@@ -37,7 +37,7 @@ namespace AiCup2019
             {
                 if ( Math.Abs(unit.Position.X - enemy.Position.X) < 2.5 && 
                      ((enemy.Position.Y >= unit.Position.Y && enemy.Position.Y - unit.Position.Y < 2.8) ||
-                      (enemy.Position.Y <= unit.Position.Y && unit.Position.Y - enemy.Position.Y  - 1.8 < 2.8)))
+                      (enemy.Position.Y <= unit.Position.Y && unit.Position.Y - enemy.Position.Y  - 1.8 < 2.9)))
                 {
                     if (targetType == TargetEnum.EnemyForBigBoom)
                     {
@@ -50,13 +50,13 @@ namespace AiCup2019
                     else
                     {
                         action = _actionProvider.GetAction(unit, game, enemy, debug, targetPos, _map, WeaponType.AssaultRifle);
-                        if (unit.Mines >= 2) action.Shoot = false;
+                        //if (unit.Mines >= 2) action.Shoot = false;
                     }
                 }
                 else
                 {
                     action = _actionProvider.GetAction(unit, game, enemy, debug, targetPos, _map, WeaponType.AssaultRifle);
-                    if (unit.Mines >= 2) action.Shoot = false;
+                   // if (unit.Mines >= 2) action.Shoot = false;
                 }
             }
             

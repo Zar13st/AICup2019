@@ -54,6 +54,12 @@ namespace AiCup2019.Pathfinding
                    _game.Level.Tiles[x][y] == Tile.JumpPad;
         }
 
+        public bool CanPlantMine(int x, int y)
+        {
+            return _game.Level.Tiles[x][y - 1] == Tile.Wall ||
+                   _game.Level.Tiles[x][y - 1] == Tile.Platform;
+        }
+
         public bool IsJumpPad(int x, int y)
         {
             return _game.Level.Tiles[x][y] == Tile.JumpPad;

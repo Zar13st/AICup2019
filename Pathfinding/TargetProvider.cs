@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using AiCup2019.Model;
 using aicup2019.Pathfinding;
 using AiCup2019.Providers;
@@ -193,6 +194,8 @@ namespace AiCup2019.Pathfinding
                     nearestWeapon = lootBox;
                 }
             }
+
+            if (!nearestWeapon.HasValue) return game.LootBoxes.FirstOrDefault();
 
             return nearestWeapon.Value;
         }
