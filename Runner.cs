@@ -1,9 +1,6 @@
-using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net.Sockets;
-using System.Text;
 
 namespace AiCup2019
 {
@@ -11,6 +8,10 @@ namespace AiCup2019
     {
         private BinaryReader reader;
         private BinaryWriter writer;
+
+        private int _kamikadzeId;
+        private int _secondPlayerId;
+
         public Runner(string host, int port, string token)
         {
             var client = new TcpClient(host, port) { NoDelay = true };
@@ -33,15 +34,95 @@ namespace AiCup2019
                 {
                     break;
                 }
+
                 Model.PlayerView playerView = message.PlayerView.Value;
-                var actions = new Dictionary<int, Model.UnitAction>();
-                foreach (var unit in playerView.Game.Units)
+
+                var isTwo = playerView.Game.Units.Length >= 3;
+
+                if (message.PlayerView.Value.Game.CurrentTick == 0 && isTwo)
                 {
-                    if (unit.PlayerId == playerView.MyId)
+                    int firstId = -1;
+                    int secondId = -1;
+                    var lestSide = false;
+                    double firstX = 0;
+                    double secondX = 0;
+
+                    foreach (var unit in playerView.Game.Units)
                     {
-                        actions.Add(unit.Id, myStrategy.GetAction(unit, playerView.Game, debug));
+                        if (unit.PlayerId == playerView.MyId)
+                        {
+                            if (firstId == -1)
+                            {
+                                firstId = unit.Id;
+                                firstX = unit.Position.X;
+                                if (unit.Position.X <= 20)
+                                {
+                                    lestSide = true;
+                                }
+                            }
+                            else
+                            {
+                                secondId = unit.Id;
+                                secondX = unit.Position.X;
+                            }
+                        }
+                    }
+
+                    if (lestSide)
+                    {
+                        if (firstX > secondX)
+                        {
+                            _kamikadzeId = firstId;
+                            _secondPlayerId = secondId;
+                        }
+                        else
+                        {
+                            _kamikadzeId = secondId;
+                            _secondPlayerId = firstId;
+                        }
+                    }
+                    else
+                    {
+                        if (firstX > secondX)
+                        {
+                            _kamikadzeId = secondId;
+                            _secondPlayerId = firstId;
+                        }
+                        else
+                        {
+                            _kamikadzeId = firstId;
+                            _secondPlayerId = secondId;
+                        }
                     }
                 }
+
+                var actions = new Dictionary<int, Model.UnitAction>();
+
+                if (isTwo)
+                {
+                    foreach (var unit in playerView.Game.Units)
+                    {
+                        if (unit.Id == _kamikadzeId)
+                        {
+                            actions.Add(unit.Id, myStrategy.GetAction(unit, playerView.Game, debug));
+                        }
+                        else if (unit.Id == _secondPlayerId)
+                        {
+                            //TODO: second player strategy
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (var unit in playerView.Game.Units)
+                    {
+                        if (unit.PlayerId == playerView.MyId)
+                        {
+                            actions.Add(unit.Id, myStrategy.GetAction(unit, playerView.Game, debug));
+                        }
+                    }
+                }
+
                 new Model.PlayerMessageGame.ActionMessage(new Model.Versioned(actions)).WriteTo(writer);
                 writer.Flush();
             }
