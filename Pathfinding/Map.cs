@@ -22,7 +22,7 @@ namespace AiCup2019.Pathfinding
                         if (targetType != TargetEnum.Enemy && x == (int)enemy.Position.X  && (y == (int)enemy.Position.Y || y == (int)enemy.Position.Y + 1))
                         {
                             MGrid[x, y] = 0;
-                            //debug.Draw(new CustomData.Rect(new Vec2Float(x, y), new Vec2Float(1, 1), new ColorFloat(255, 0, 0, 0.4F)));
+                            debug.Draw(new CustomData.Rect(new Vec2Float(x, y), new Vec2Float(1, 1), new ColorFloat(255, 0, 0, 0.4F)));
                         }
                         else
                         {
@@ -32,7 +32,7 @@ namespace AiCup2019.Pathfinding
                     else
                     {
                         MGrid[x, y] = 0;
-                        //debug.Draw(new CustomData.Rect(new Vec2Float(x, y), new Vec2Float(1, 1), new ColorFloat(255, 0, 0, 0.4F)));
+                        debug.Draw(new CustomData.Rect(new Vec2Float(x, y), new Vec2Float(1, 1), new ColorFloat(255, 0, 0, 0.4F)));
                     }
                 }
             }

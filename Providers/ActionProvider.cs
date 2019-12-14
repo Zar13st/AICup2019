@@ -18,7 +18,7 @@ namespace aicup2019.Providers
         private int _lastTargetX;
         private int _lastTargetY;
 
-        public UnitAction GetAction(Unit unit, Game game, Unit enemy, Debug debug, Vec2Double target, Map map)
+        public UnitAction GetAction(Unit unit, Game game, Unit enemy, Debug debug, Vec2Double target, Map map, WeaponType weaponType)
         {
             var aim = _aimProvider.GetAim(unit, enemy);
 
@@ -67,7 +67,7 @@ namespace aicup2019.Providers
                                 }
                                 else
                                 {
-                                    return GetOldAction(unit, game, enemy, target, aim, shoot);
+                                    return GetOldAction(unit, game, enemy, target, aim, shoot, weaponType);
                                 }
                             }
                         }
@@ -89,13 +89,13 @@ namespace aicup2019.Providers
                     Aim = aim,
                     Shoot = unit.Weapon.HasValue && shoot,
                     Reload = false,
-                    SwapWeapon = !unit.Weapon.HasValue || unit.Weapon.Value.Typ != WeaponType.Pistol,
+                    SwapWeapon = !unit.Weapon.HasValue || unit.Weapon.Value.Typ != weaponType,
                     PlantMine = false
                 };
             }
             else
             {
-                return GetOldAction(unit, game, enemy, target, aim, shoot);
+                return GetOldAction(unit, game, enemy, target, aim, shoot, weaponType);
             }
 
         }
@@ -110,7 +110,7 @@ namespace aicup2019.Providers
             _pathLength = 0;
         }
 
-        private UnitAction GetOldAction(Unit unit, Game game, Unit enemy, Vec2Double target, Vec2Double aim, bool shoot)
+        private UnitAction GetOldAction(Unit unit, Game game, Unit enemy, Vec2Double target, Vec2Double aim, bool shoot, WeaponType weaponType)
         {
             var jumpData = _jumpProvider.GetJump(unit, game, target, enemy);
 
@@ -122,7 +122,7 @@ namespace aicup2019.Providers
                 Aim = aim,
                 Shoot = unit.Weapon.HasValue && shoot,
                 Reload = false,
-                SwapWeapon = !unit.Weapon.HasValue || unit.Weapon.Value.Typ != WeaponType.Pistol,
+                SwapWeapon = !unit.Weapon.HasValue || unit.Weapon.Value.Typ != weaponType,
                 PlantMine = false
             };
         }

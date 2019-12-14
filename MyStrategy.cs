@@ -1,3 +1,4 @@
+using System;
 using AiCup2019.Model;
 using aicup2019.Pathfinding;
 using AiCup2019.Pathfinding;
@@ -12,6 +13,7 @@ namespace AiCup2019
         private readonly TargetProvider _targetProvider = new TargetProvider();
         private readonly ActionProvider _actionProvider = new ActionProvider();
         private readonly JumpPadHelper _jumpPadHelper = new JumpPadHelper();
+        private readonly BoomActionProvider _boomActionProvider = new BoomActionProvider();
 
         private readonly Map _map = new Map();
 
@@ -26,7 +28,37 @@ namespace AiCup2019
 
             _map.SetMap(game, debug, enemy, targetType);
 
-            var action = _actionProvider.GetAction(unit, game, enemy, debug, targetPos, _map);
+            UnitAction action;
+            if (_targetProvider.BoombCount == 0)
+            {
+                action = _actionProvider.GetAction(unit, game, enemy, debug, targetPos, _map, WeaponType.Pistol);
+            }
+            else
+            {
+                if ( Math.Abs(unit.Position.X - enemy.Position.X) < 2.5 && 
+                     ((enemy.Position.Y >= unit.Position.Y && enemy.Position.Y - unit.Position.Y < 2.8) ||
+                      (enemy.Position.Y <= unit.Position.Y && unit.Position.Y - enemy.Position.Y  - 1.8 < 2.8)))
+                {
+                    if (targetType == TargetEnum.EnemyForBigBoom)
+                    {
+                        action = _boomActionProvider.GetBigBoomAction(unit, game, enemy, debug, targetPos, _map, WeaponType.AssaultRifle);
+                    }
+                    else if (targetType == TargetEnum.EnemyForBoom)
+                    {
+                        action = _boomActionProvider.GetBoomAction(unit, game, enemy, debug, targetPos, _map, WeaponType.AssaultRifle);
+                    }
+                    else
+                    {
+                        action = _actionProvider.GetAction(unit, game, enemy, debug, targetPos, _map, WeaponType.AssaultRifle);
+                        if (unit.Mines >= 2) action.Shoot = false;
+                    }
+                }
+                else
+                {
+                    action = _actionProvider.GetAction(unit, game, enemy, debug, targetPos, _map, WeaponType.AssaultRifle);
+                    if (unit.Mines >= 2) action.Shoot = false;
+                }
+            }
             
             //debug.Draw(new CustomData.Log($"X: {unit.Position.X:F1}, Y: {unit.Position.Y:F1}"));
             //debug.Draw(new CustomData.Log($"X: {enemy.Position.X:F1}, Y: {enemy.Position.Y:F1}"));

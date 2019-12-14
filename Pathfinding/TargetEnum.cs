@@ -5,5 +5,8 @@
         Weapon,
         Enemy,
         Health,
+        Boomb,
+        EnemyForBigBoom,
+        EnemyForBoom,
     }
 }
