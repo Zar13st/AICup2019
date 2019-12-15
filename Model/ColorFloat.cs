@@ -8,10 +8,10 @@ namespace AiCup2019.Model
         public float A { get; set; }
         public ColorFloat(float r, float g, float b, float a)
         {
-            this.R = r;
-            this.G = g;
-            this.B = b;
-            this.A = a;
+            R = r;
+            G = g;
+            B = b;
+            A = a;
         }
         public static ColorFloat ReadFrom(System.IO.BinaryReader reader)
         {

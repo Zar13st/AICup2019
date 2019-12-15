@@ -2,10 +2,10 @@ namespace AiCup2019.Model
 {
     public struct ServerMessageGame
     {
-        public Model.PlayerView? PlayerView { get; set; }
-        public ServerMessageGame(Model.PlayerView? playerView)
+        public PlayerView? PlayerView { get; set; }
+        public ServerMessageGame(PlayerView? playerView)
         {
-            this.PlayerView = playerView;
+            PlayerView = playerView;
         }
         public static ServerMessageGame ReadFrom(System.IO.BinaryReader reader)
         {

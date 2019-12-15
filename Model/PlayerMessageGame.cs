@@ -19,16 +19,16 @@ namespace AiCup2019.Model
         public class CustomDataMessage : PlayerMessageGame
         {
             public const int TAG = 0;
-            public Model.CustomData Data { get; set; }
+            public CustomData Data { get; set; }
             public CustomDataMessage() {}
-            public CustomDataMessage(Model.CustomData data)
+            public CustomDataMessage(CustomData data)
             {
-                this.Data = data;
+                Data = data;
             }
             public static new CustomDataMessage ReadFrom(System.IO.BinaryReader reader)
             {
                 var result = new CustomDataMessage();
-                result.Data = Model.CustomData.ReadFrom(reader);
+                result.Data = CustomData.ReadFrom(reader);
                 return result;
             }
             public override void WriteTo(System.IO.BinaryWriter writer)
@@ -41,16 +41,16 @@ namespace AiCup2019.Model
         public class ActionMessage : PlayerMessageGame
         {
             public const int TAG = 1;
-            public Model.Versioned Action { get; set; }
+            public Versioned Action { get; set; }
             public ActionMessage() {}
-            public ActionMessage(Model.Versioned action)
+            public ActionMessage(Versioned action)
             {
-                this.Action = action;
+                Action = action;
             }
             public static new ActionMessage ReadFrom(System.IO.BinaryReader reader)
             {
                 var result = new ActionMessage();
-                result.Action = Model.Versioned.ReadFrom(reader);
+                result.Action = Versioned.ReadFrom(reader);
                 return result;
             }
             public override void WriteTo(System.IO.BinaryWriter writer)

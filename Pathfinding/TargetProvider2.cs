@@ -6,7 +6,7 @@ using AiCup2019.Providers;
 
 namespace AiCup2019.Pathfinding
 {
-    public class TargetProvider
+    public class TargetProvider2
     {
         public int BoombCount { get; private set; }
         public bool ShouldBoom { get; private set; }
@@ -52,10 +52,10 @@ namespace AiCup2019.Pathfinding
 
         private (Vec2Double targetPos, TargetEnum targetType) GetBigBoomTarget(Unit unit, Game game, Unit enemy)
         {
-            var unitHasPistol = unit.Weapon.HasValue && unit.Weapon.Value.Typ == WeaponType.AssaultRifle;
+            var unitHasPistol = unit.Weapon.HasValue && unit.Weapon.Value.Typ == WeaponType.RocketLauncher;
             if (!unitHasPistol)
             {
-                var nearestWeapon = GetWeapon(unit, game, WeaponType.AssaultRifle);
+                var nearestWeapon = GetWeapon(unit, game, WeaponType.RocketLauncher);
 
                 if (_leftSide)
                 {
@@ -104,10 +104,10 @@ namespace AiCup2019.Pathfinding
 
         private (Vec2Double targetPos, TargetEnum targetType) GetBoomTarget(Unit unit, Game game, Unit enemy)
         {
-            var unitHasPistol = unit.Weapon.HasValue && unit.Weapon.Value.Typ == WeaponType.AssaultRifle;
+            var unitHasPistol = unit.Weapon.HasValue && unit.Weapon.Value.Typ == WeaponType.RocketLauncher;
             if (!unitHasPistol)
             {
-                var nearestWeapon = GetWeapon(unit, game, WeaponType.AssaultRifle);
+                var nearestWeapon = GetWeapon(unit, game, WeaponType.RocketLauncher);
 
                 if (_leftSide)
                 {
@@ -163,10 +163,10 @@ namespace AiCup2019.Pathfinding
 
         private (Vec2Double targetPos, TargetEnum targetType) GetOldTarget(Unit unit, Game game, Unit enemy)
         {
-            var unitHasPistol = unit.Weapon.HasValue && unit.Weapon.Value.Typ == WeaponType.Pistol;
+            var unitHasPistol = unit.Weapon.HasValue && unit.Weapon.Value.Typ == WeaponType.RocketLauncher;
             if (!unitHasPistol)
             {
-                var nearestWeapon = GetWeapon(unit, game, WeaponType.Pistol);
+                var nearestWeapon = GetWeapon(unit, game, WeaponType.RocketLauncher);
                 return (nearestWeapon.Position, TargetEnum.Weapon);
 
             }

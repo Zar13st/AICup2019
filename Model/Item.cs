@@ -25,7 +25,7 @@ namespace AiCup2019.Model
             public HealthPack() {}
             public HealthPack(int health)
             {
-                this.Health = health;
+                Health = health;
             }
             public static new HealthPack ReadFrom(System.IO.BinaryReader reader)
             {
@@ -43,11 +43,11 @@ namespace AiCup2019.Model
         public class Weapon : Item
         {
             public const int TAG = 1;
-            public Model.WeaponType WeaponType { get; set; }
+            public WeaponType WeaponType { get; set; }
             public Weapon() {}
-            public Weapon(Model.WeaponType weaponType)
+            public Weapon(WeaponType weaponType)
             {
-                this.WeaponType = weaponType;
+                WeaponType = weaponType;
             }
             public static new Weapon ReadFrom(System.IO.BinaryReader reader)
             {
@@ -55,13 +55,13 @@ namespace AiCup2019.Model
                 switch (reader.ReadInt32())
                 {
                 case 0:
-                    result.WeaponType = Model.WeaponType.Pistol;
+                    result.WeaponType = WeaponType.Pistol;
                     break;
                 case 1:
-                    result.WeaponType = Model.WeaponType.AssaultRifle;
+                    result.WeaponType = WeaponType.AssaultRifle;
                     break;
                 case 2:
-                    result.WeaponType = Model.WeaponType.RocketLauncher;
+                    result.WeaponType = WeaponType.RocketLauncher;
                     break;
                 default:
                     throw new System.Exception("Unexpected discriminant value");

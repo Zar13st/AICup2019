@@ -2,24 +2,24 @@ namespace AiCup2019.Model
 {
     public struct Bullet
     {
-        public Model.WeaponType WeaponType { get; set; }
+        public WeaponType WeaponType { get; set; }
         public int UnitId { get; set; }
         public int PlayerId { get; set; }
-        public Model.Vec2Double Position { get; set; }
-        public Model.Vec2Double Velocity { get; set; }
+        public Vec2Double Position { get; set; }
+        public Vec2Double Velocity { get; set; }
         public int Damage { get; set; }
         public double Size { get; set; }
-        public Model.ExplosionParameters? ExplosionParameters { get; set; }
-        public Bullet(Model.WeaponType weaponType, int unitId, int playerId, Model.Vec2Double position, Model.Vec2Double velocity, int damage, double size, Model.ExplosionParameters? explosionParameters)
+        public ExplosionParameters? ExplosionParameters { get; set; }
+        public Bullet(WeaponType weaponType, int unitId, int playerId, Vec2Double position, Vec2Double velocity, int damage, double size, ExplosionParameters? explosionParameters)
         {
-            this.WeaponType = weaponType;
-            this.UnitId = unitId;
-            this.PlayerId = playerId;
-            this.Position = position;
-            this.Velocity = velocity;
-            this.Damage = damage;
-            this.Size = size;
-            this.ExplosionParameters = explosionParameters;
+            WeaponType = weaponType;
+            UnitId = unitId;
+            PlayerId = playerId;
+            Position = position;
+            Velocity = velocity;
+            Damage = damage;
+            Size = size;
+            ExplosionParameters = explosionParameters;
         }
         public static Bullet ReadFrom(System.IO.BinaryReader reader)
         {
@@ -27,21 +27,21 @@ namespace AiCup2019.Model
             switch (reader.ReadInt32())
             {
             case 0:
-                result.WeaponType = Model.WeaponType.Pistol;
+                result.WeaponType = WeaponType.Pistol;
                 break;
             case 1:
-                result.WeaponType = Model.WeaponType.AssaultRifle;
+                result.WeaponType = WeaponType.AssaultRifle;
                 break;
             case 2:
-                result.WeaponType = Model.WeaponType.RocketLauncher;
+                result.WeaponType = WeaponType.RocketLauncher;
                 break;
             default:
                 throw new System.Exception("Unexpected discriminant value");
             }
             result.UnitId = reader.ReadInt32();
             result.PlayerId = reader.ReadInt32();
-            result.Position = Model.Vec2Double.ReadFrom(reader);
-            result.Velocity = Model.Vec2Double.ReadFrom(reader);
+            result.Position = Vec2Double.ReadFrom(reader);
+            result.Velocity = Vec2Double.ReadFrom(reader);
             result.Damage = reader.ReadInt32();
             result.Size = reader.ReadDouble();
             if (reader.ReadBoolean())

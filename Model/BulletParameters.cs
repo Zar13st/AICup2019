@@ -7,9 +7,9 @@ namespace AiCup2019.Model
         public int Damage { get; set; }
         public BulletParameters(double speed, double size, int damage)
         {
-            this.Speed = speed;
-            this.Size = size;
-            this.Damage = damage;
+            Speed = speed;
+            Size = size;
+            Damage = damage;
         }
         public static BulletParameters ReadFrom(System.IO.BinaryReader reader)
         {

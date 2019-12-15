@@ -6,8 +6,8 @@ namespace AiCup2019.Model
         public int Damage { get; set; }
         public ExplosionParameters(double radius, int damage)
         {
-            this.Radius = radius;
-            this.Damage = damage;
+            Radius = radius;
+            Damage = damage;
         }
         public static ExplosionParameters ReadFrom(System.IO.BinaryReader reader)
         {

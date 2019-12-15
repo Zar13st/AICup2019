@@ -2,36 +2,36 @@ namespace AiCup2019.Model
 {
     public struct Level
     {
-        public Model.Tile[][] Tiles { get; set; }
-        public Level(Model.Tile[][] tiles)
+        public Tile[][] Tiles { get; set; }
+        public Level(Tile[][] tiles)
         {
-            this.Tiles = tiles;
+            Tiles = tiles;
         }
         public static Level ReadFrom(System.IO.BinaryReader reader)
         {
             var result = new Level();
-            result.Tiles = new Model.Tile[reader.ReadInt32()][];
+            result.Tiles = new Tile[reader.ReadInt32()][];
             for (int i = 0; i < result.Tiles.Length; i++)
             {
-                result.Tiles[i] = new Model.Tile[reader.ReadInt32()];
+                result.Tiles[i] = new Tile[reader.ReadInt32()];
                 for (int j = 0; j < result.Tiles[i].Length; j++)
                 {
                     switch (reader.ReadInt32())
                     {
                     case 0:
-                        result.Tiles[i][j] = Model.Tile.Empty;
+                        result.Tiles[i][j] = Tile.Empty;
                         break;
                     case 1:
-                        result.Tiles[i][j] = Model.Tile.Wall;
+                        result.Tiles[i][j] = Tile.Wall;
                         break;
                     case 2:
-                        result.Tiles[i][j] = Model.Tile.Platform;
+                        result.Tiles[i][j] = Tile.Platform;
                         break;
                     case 3:
-                        result.Tiles[i][j] = Model.Tile.Ladder;
+                        result.Tiles[i][j] = Tile.Ladder;
                         break;
                     case 4:
-                        result.Tiles[i][j] = Model.Tile.JumpPad;
+                        result.Tiles[i][j] = Tile.JumpPad;
                         break;
                     default:
                         throw new System.Exception("Unexpected discriminant value");

@@ -9,19 +9,19 @@ namespace AiCup2019.Model
         public double MaxSpread { get; set; }
         public double Recoil { get; set; }
         public double AimSpeed { get; set; }
-        public Model.BulletParameters Bullet { get; set; }
-        public Model.ExplosionParameters? Explosion { get; set; }
-        public WeaponParameters(int magazineSize, double fireRate, double reloadTime, double minSpread, double maxSpread, double recoil, double aimSpeed, Model.BulletParameters bullet, Model.ExplosionParameters? explosion)
+        public BulletParameters Bullet { get; set; }
+        public ExplosionParameters? Explosion { get; set; }
+        public WeaponParameters(int magazineSize, double fireRate, double reloadTime, double minSpread, double maxSpread, double recoil, double aimSpeed, BulletParameters bullet, ExplosionParameters? explosion)
         {
-            this.MagazineSize = magazineSize;
-            this.FireRate = fireRate;
-            this.ReloadTime = reloadTime;
-            this.MinSpread = minSpread;
-            this.MaxSpread = maxSpread;
-            this.Recoil = recoil;
-            this.AimSpeed = aimSpeed;
-            this.Bullet = bullet;
-            this.Explosion = explosion;
+            MagazineSize = magazineSize;
+            FireRate = fireRate;
+            ReloadTime = reloadTime;
+            MinSpread = minSpread;
+            MaxSpread = maxSpread;
+            Recoil = recoil;
+            AimSpeed = aimSpeed;
+            Bullet = bullet;
+            Explosion = explosion;
         }
         public static WeaponParameters ReadFrom(System.IO.BinaryReader reader)
         {
@@ -33,10 +33,10 @@ namespace AiCup2019.Model
             result.MaxSpread = reader.ReadDouble();
             result.Recoil = reader.ReadDouble();
             result.AimSpeed = reader.ReadDouble();
-            result.Bullet = Model.BulletParameters.ReadFrom(reader);
+            result.Bullet = BulletParameters.ReadFrom(reader);
             if (reader.ReadBoolean())
             {
-                result.Explosion = Model.ExplosionParameters.ReadFrom(reader);
+                result.Explosion = ExplosionParameters.ReadFrom(reader);
             } else
             {
                 result.Explosion = null;

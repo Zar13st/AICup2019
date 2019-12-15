@@ -6,8 +6,8 @@ namespace AiCup2019.Model
         public int Score { get; set; }
         public Player(int id, int score)
         {
-            this.Id = id;
-            this.Score = score;
+            Id = id;
+            Score = score;
         }
         public static Player ReadFrom(System.IO.BinaryReader reader)
         {

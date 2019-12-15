@@ -7,10 +7,10 @@ using AiCup2019.Providers;
 
 namespace AiCup2019
 {
-    public class MyStrategy
+    public class MyStrategy2
     {
         private readonly EnemyProvider _enemyProvider = new EnemyProvider();
-        private readonly TargetProvider _targetProvider = new TargetProvider();
+        private readonly TargetProvider2 _targetProvider = new TargetProvider2();
         private readonly ActionProvider _actionProvider = new ActionProvider();
         private readonly JumpPadHelper _jumpPadHelper = new JumpPadHelper();
         private readonly BoomActionProvider _boomActionProvider = new BoomActionProvider();
@@ -19,7 +19,7 @@ namespace AiCup2019
 
         public UnitAction GetAction(Unit unit, Game game, Debug debug)
         {
-            var enemyUnit = _enemyProvider.GetEnemy(unit, game);
+            var enemyUnit = _enemyProvider.GetFurtherEnemy(unit, game);
             if (!enemyUnit.HasValue) return new UnitAction();
             var enemy = enemyUnit.Value;
 
@@ -31,11 +31,11 @@ namespace AiCup2019
             UnitAction action;
             if (_targetProvider.BoombCount == 0)
             {
-                action = _actionProvider.GetAction(unit, game, enemy, debug, targetPos, _map, WeaponType.Pistol);
+                action = _actionProvider.GetAction(unit, game, enemy, debug, targetPos, _map, WeaponType.RocketLauncher);
             }
             else if(!_targetProvider.ShouldBoom)
             {
-                action = _actionProvider.GetAction(unit, game, enemy, debug, targetPos, _map, WeaponType.AssaultRifle);
+                action = _actionProvider.GetAction(unit, game, enemy, debug, targetPos, _map, WeaponType.RocketLauncher);
             }
             else 
             {
@@ -45,20 +45,20 @@ namespace AiCup2019
                 {
                     if (targetType == TargetEnum.EnemyForBigBoom)
                     {
-                        action = _boomActionProvider.GetBigBoomAction(unit, game, enemy, debug, targetPos, _map, WeaponType.AssaultRifle);
+                        action = _boomActionProvider.GetBigBoomAction(unit, game, enemy, debug, targetPos, _map, WeaponType.RocketLauncher);
                     }
                     else if (targetType == TargetEnum.EnemyForBoom)
                     {
-                        action = _boomActionProvider.GetBoomAction(unit, game, enemy, debug, targetPos, _map, WeaponType.AssaultRifle);
+                        action = _boomActionProvider.GetBoomAction(unit, game, enemy, debug, targetPos, _map, WeaponType.RocketLauncher);
                     }
                     else
                     {
-                        action = _actionProvider.GetAction(unit, game, enemy, debug, targetPos, _map, WeaponType.AssaultRifle);
+                        action = _actionProvider.GetAction(unit, game, enemy, debug, targetPos, _map, WeaponType.RocketLauncher);
                     }
                 }
                 else
                 {
-                    action = _actionProvider.GetAction(unit, game, enemy, debug, targetPos, _map, WeaponType.AssaultRifle);
+                    action = _actionProvider.GetAction(unit, game, enemy, debug, targetPos, _map, WeaponType.RocketLauncher);
                 }
             }
             

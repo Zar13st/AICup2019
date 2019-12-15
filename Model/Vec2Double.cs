@@ -6,8 +6,8 @@ namespace AiCup2019.Model
         public double Y { get; set; }
         public Vec2Double(double x, double y)
         {
-            this.X = x;
-            this.Y = y;
+            X = x;
+            Y = y;
         }
         public static Vec2Double ReadFrom(System.IO.BinaryReader reader)
         {

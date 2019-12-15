@@ -6,8 +6,8 @@ namespace AiCup2019.Model
         public float Y { get; set; }
         public Vec2Float(float x, float y)
         {
-            this.X = x;
-            this.Y = y;
+            X = x;
+            Y = y;
         }
         public static Vec2Float ReadFrom(System.IO.BinaryReader reader)
         {

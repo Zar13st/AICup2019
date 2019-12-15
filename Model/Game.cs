@@ -3,54 +3,54 @@ namespace AiCup2019.Model
     public struct Game
     {
         public int CurrentTick { get; set; }
-        public Model.Properties Properties { get; set; }
-        public Model.Level Level { get; set; }
-        public Model.Player[] Players { get; set; }
-        public Model.Unit[] Units { get; set; }
-        public Model.Bullet[] Bullets { get; set; }
-        public Model.Mine[] Mines { get; set; }
-        public Model.LootBox[] LootBoxes { get; set; }
-        public Game(int currentTick, Model.Properties properties, Model.Level level, Model.Player[] players, Model.Unit[] units, Model.Bullet[] bullets, Model.Mine[] mines, Model.LootBox[] lootBoxes)
+        public Properties Properties { get; set; }
+        public Level Level { get; set; }
+        public Player[] Players { get; set; }
+        public Unit[] Units { get; set; }
+        public Bullet[] Bullets { get; set; }
+        public Mine[] Mines { get; set; }
+        public LootBox[] LootBoxes { get; set; }
+        public Game(int currentTick, Properties properties, Level level, Player[] players, Unit[] units, Bullet[] bullets, Mine[] mines, LootBox[] lootBoxes)
         {
-            this.CurrentTick = currentTick;
-            this.Properties = properties;
-            this.Level = level;
-            this.Players = players;
-            this.Units = units;
-            this.Bullets = bullets;
-            this.Mines = mines;
-            this.LootBoxes = lootBoxes;
+            CurrentTick = currentTick;
+            Properties = properties;
+            Level = level;
+            Players = players;
+            Units = units;
+            Bullets = bullets;
+            Mines = mines;
+            LootBoxes = lootBoxes;
         }
         public static Game ReadFrom(System.IO.BinaryReader reader)
         {
             var result = new Game();
             result.CurrentTick = reader.ReadInt32();
-            result.Properties = Model.Properties.ReadFrom(reader);
-            result.Level = Model.Level.ReadFrom(reader);
-            result.Players = new Model.Player[reader.ReadInt32()];
+            result.Properties = Properties.ReadFrom(reader);
+            result.Level = Level.ReadFrom(reader);
+            result.Players = new Player[reader.ReadInt32()];
             for (int i = 0; i < result.Players.Length; i++)
             {
-                result.Players[i] = Model.Player.ReadFrom(reader);
+                result.Players[i] = Player.ReadFrom(reader);
             }
-            result.Units = new Model.Unit[reader.ReadInt32()];
+            result.Units = new Unit[reader.ReadInt32()];
             for (int i = 0; i < result.Units.Length; i++)
             {
-                result.Units[i] = Model.Unit.ReadFrom(reader);
+                result.Units[i] = Unit.ReadFrom(reader);
             }
-            result.Bullets = new Model.Bullet[reader.ReadInt32()];
+            result.Bullets = new Bullet[reader.ReadInt32()];
             for (int i = 0; i < result.Bullets.Length; i++)
             {
-                result.Bullets[i] = Model.Bullet.ReadFrom(reader);
+                result.Bullets[i] = Bullet.ReadFrom(reader);
             }
-            result.Mines = new Model.Mine[reader.ReadInt32()];
+            result.Mines = new Mine[reader.ReadInt32()];
             for (int i = 0; i < result.Mines.Length; i++)
             {
-                result.Mines[i] = Model.Mine.ReadFrom(reader);
+                result.Mines[i] = Mine.ReadFrom(reader);
             }
-            result.LootBoxes = new Model.LootBox[reader.ReadInt32()];
+            result.LootBoxes = new LootBox[reader.ReadInt32()];
             for (int i = 0; i < result.LootBoxes.Length; i++)
             {
-                result.LootBoxes[i] = Model.LootBox.ReadFrom(reader);
+                result.LootBoxes[i] = LootBox.ReadFrom(reader);
             }
             return result;
         }

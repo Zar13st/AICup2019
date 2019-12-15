@@ -8,10 +8,10 @@ namespace AiCup2019.Model
         public bool CanCancel { get; set; }
         public JumpState(bool canJump, double speed, double maxTime, bool canCancel)
         {
-            this.CanJump = canJump;
-            this.Speed = speed;
-            this.MaxTime = maxTime;
-            this.CanCancel = canCancel;
+            CanJump = canJump;
+            Speed = speed;
+            MaxTime = maxTime;
+            CanCancel = canCancel;
         }
         public static JumpState ReadFrom(System.IO.BinaryReader reader)
         {

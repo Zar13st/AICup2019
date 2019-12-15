@@ -2,24 +2,24 @@ namespace AiCup2019.Model
 {
     public struct Weapon
     {
-        public Model.WeaponType Typ { get; set; }
-        public Model.WeaponParameters Parameters { get; set; }
+        public WeaponType Typ { get; set; }
+        public WeaponParameters Parameters { get; set; }
         public int Magazine { get; set; }
         public bool WasShooting { get; set; }
         public double Spread { get; set; }
         public double? FireTimer { get; set; }
         public double? LastAngle { get; set; }
         public int? LastFireTick { get; set; }
-        public Weapon(Model.WeaponType typ, Model.WeaponParameters parameters, int magazine, bool wasShooting, double spread, double? fireTimer, double? lastAngle, int? lastFireTick)
+        public Weapon(WeaponType typ, WeaponParameters parameters, int magazine, bool wasShooting, double spread, double? fireTimer, double? lastAngle, int? lastFireTick)
         {
-            this.Typ = typ;
-            this.Parameters = parameters;
-            this.Magazine = magazine;
-            this.WasShooting = wasShooting;
-            this.Spread = spread;
-            this.FireTimer = fireTimer;
-            this.LastAngle = lastAngle;
-            this.LastFireTick = lastFireTick;
+            Typ = typ;
+            Parameters = parameters;
+            Magazine = magazine;
+            WasShooting = wasShooting;
+            Spread = spread;
+            FireTimer = fireTimer;
+            LastAngle = lastAngle;
+            LastFireTick = lastFireTick;
         }
         public static Weapon ReadFrom(System.IO.BinaryReader reader)
         {
@@ -27,18 +27,18 @@ namespace AiCup2019.Model
             switch (reader.ReadInt32())
             {
             case 0:
-                result.Typ = Model.WeaponType.Pistol;
+                result.Typ = WeaponType.Pistol;
                 break;
             case 1:
-                result.Typ = Model.WeaponType.AssaultRifle;
+                result.Typ = WeaponType.AssaultRifle;
                 break;
             case 2:
-                result.Typ = Model.WeaponType.RocketLauncher;
+                result.Typ = WeaponType.RocketLauncher;
                 break;
             default:
                 throw new System.Exception("Unexpected discriminant value");
             }
-            result.Parameters = Model.WeaponParameters.ReadFrom(reader);
+            result.Parameters = WeaponParameters.ReadFrom(reader);
             result.Magazine = reader.ReadInt32();
             result.WasShooting = reader.ReadBoolean();
             result.Spread = reader.ReadDouble();
