@@ -33,7 +33,11 @@ namespace AiCup2019
             {
                 action = _actionProvider.GetAction(unit, game, enemy, debug, targetPos, _map, WeaponType.Pistol);
             }
-            else
+            else if(!_targetProvider.ShouldBoom)
+            {
+                action = _actionProvider.GetAction(unit, game, enemy, debug, targetPos, _map, WeaponType.AssaultRifle);
+            }
+            else 
             {
                 if ( Math.Abs(unit.Position.X - enemy.Position.X) < 2.5 && 
                      ((enemy.Position.Y >= unit.Position.Y && enemy.Position.Y - unit.Position.Y < 2.8) ||
@@ -50,13 +54,11 @@ namespace AiCup2019
                     else
                     {
                         action = _actionProvider.GetAction(unit, game, enemy, debug, targetPos, _map, WeaponType.AssaultRifle);
-                        //if (unit.Mines >= 2) action.Shoot = false;
                     }
                 }
                 else
                 {
                     action = _actionProvider.GetAction(unit, game, enemy, debug, targetPos, _map, WeaponType.AssaultRifle);
-                   // if (unit.Mines >= 2) action.Shoot = false;
                 }
             }
             

@@ -9,6 +9,7 @@ namespace AiCup2019.Pathfinding
     public class TargetProvider
     {
         public int BoombCount { get; private set; }
+        public bool ShouldBoom { get; private set; }
         private bool _leftSide;
         private bool _mineFull;
         private Dictionary<int, Vec2Double> _targets = new Dictionary<int, Vec2Double>();
@@ -32,7 +33,10 @@ namespace AiCup2019.Pathfinding
                 if (unit.Position.X <= 20) _leftSide = true;
             }
 
-            if (BoombCount == 0)
+            ShouldBoom = game.Players.First(x => x.Id == unit.PlayerId).Score + enemy.Health >
+                         game.Players.First(x => x.Id == enemy.PlayerId).Score;
+
+            if (BoombCount == 0 || !ShouldBoom)
             {
                 return GetOldTarget(unit, game, enemy);
             }
