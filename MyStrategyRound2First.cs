@@ -7,7 +7,7 @@ using AiCup2019.Providers;
 
 namespace AiCup2019
 {
-    public class MyStrategy
+    public class MyStrategyRound2First
     {
         private readonly EnemyProvider _enemyProvider = new EnemyProvider();
         private readonly TargetProvider _targetProvider = new TargetProvider();
@@ -17,9 +17,9 @@ namespace AiCup2019
 
         private readonly Map _map = new Map();
 
-        public UnitAction GetAction(Unit unit, Game game, Debug debug)
+        public UnitAction GetAction(Unit unit, Game game, Debug debug, Unit mate)
         {
-            var enemyUnit = _enemyProvider.GetEnemy(unit, game);
+            var enemyUnit = _enemyProvider.GetEnemy1(unit, game);
             if (!enemyUnit.HasValue) return new UnitAction();
             var enemy = enemyUnit.Value;
 
@@ -27,6 +27,7 @@ namespace AiCup2019
             var targetPos = _jumpPadHelper.Shift(pos, game);
 
             _map.SetMap(game, debug, enemy, targetType);
+            if (mate.Health > 0) _map.SetMate(game, debug, mate);
 
             UnitAction action;
             if (_targetProvider.BoombCount == 0)
@@ -41,7 +42,7 @@ namespace AiCup2019
             {
                 if ( Math.Abs(unit.Position.X - enemy.Position.X) < 3 && 
                      ((enemy.Position.Y >= unit.Position.Y && enemy.Position.Y - unit.Position.Y < 2.8) ||
-                      (enemy.Position.Y <= unit.Position.Y && unit.Position.Y - enemy.Position.Y  - 1.8 < 2.9)))
+                      (enemy.Position.Y <= unit.Position.Y && unit.Position.Y - enemy.Position.Y  - 1.8 < 2.8)))
                 {
                     if (targetType == TargetEnum.EnemyForBigBoom)
                     {

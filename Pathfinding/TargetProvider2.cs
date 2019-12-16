@@ -36,9 +36,13 @@ namespace AiCup2019.Pathfinding
             ShouldBoom = game.Players.First(x => x.Id == unit.PlayerId).Score + enemy.Health >
                          game.Players.First(x => x.Id == enemy.PlayerId).Score;
 
-            if (BoombCount == 0 || !ShouldBoom)
+            if (BoombCount == 0)
             {
                 return GetOldTarget(unit, game, enemy);
+            }
+            else if (!ShouldBoom)
+            {
+                return GetOldTarget2(unit, game, enemy);
             }
             else if (BoombCount == 2)
             {
@@ -167,6 +171,33 @@ namespace AiCup2019.Pathfinding
             if (!unitHasPistol)
             {
                 var nearestWeapon = GetWeapon(unit, game, WeaponType.RocketLauncher);
+                return (nearestWeapon.Position, TargetEnum.Weapon);
+
+            }
+            else if (unit.Health > Extensions.HealthForRunToMed)
+            {
+                return (enemy.Position, TargetEnum.Enemy);
+            }
+            else
+            {
+                var health = _healthProvider.GetHealth(unit, game, enemy);
+                if (health.HasValue)
+                {
+                    return (health.Value.Position, TargetEnum.Health);
+                }
+                else
+                {
+                    return (enemy.Position, TargetEnum.Enemy);
+                }
+            }
+        }
+
+        private (Vec2Double targetPos, TargetEnum targetType) GetOldTarget2(Unit unit, Game game, Unit enemy)
+        {
+            var unitHasPistol = unit.Weapon.HasValue;
+            if (!unitHasPistol)
+            {
+                var nearestWeapon = GetWeapon(unit, game, WeaponType.Pistol);
                 return (nearestWeapon.Position, TargetEnum.Weapon);
 
             }

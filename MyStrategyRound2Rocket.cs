@@ -7,7 +7,7 @@ using AiCup2019.Providers;
 
 namespace AiCup2019
 {
-    public class MyStrategy2
+    public class MyStrategyRound2Rocket
     {
         private readonly EnemyProvider _enemyProvider = new EnemyProvider();
         private readonly TargetProvider2 _targetProvider = new TargetProvider2();
@@ -17,9 +17,9 @@ namespace AiCup2019
 
         private readonly Map _map = new Map();
 
-        public UnitAction GetAction(Unit unit, Game game, Debug debug)
+        public UnitAction GetAction(Unit unit, Game game, Debug debug, Unit mate)
         {
-            var enemyUnit = _enemyProvider.GetFurtherEnemy(unit, game);
+            var enemyUnit = _enemyProvider.GetEnemy2(unit, game);
             if (!enemyUnit.HasValue) return new UnitAction();
             var enemy = enemyUnit.Value;
 

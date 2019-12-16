@@ -38,6 +38,12 @@ namespace AiCup2019.Pathfinding
             }
         }
 
+        public void SetMate(Game game, Debug debug, Unit mate)
+        {
+            MGrid[(int)mate.Position.X, (int)mate.Position.Y] = 0;
+            MGrid[(int)mate.Position.X, (int)mate.Position.Y + 1] = 0;
+        }
+
         public bool IsOneWayPlatform(int x, int y)
         {
             return _game.Level.Tiles[x][y - 1] == Tile.Platform ||
